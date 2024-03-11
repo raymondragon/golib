@@ -1,4 +1,4 @@
-package url
+package golib
 
 import (
     "net/url"
