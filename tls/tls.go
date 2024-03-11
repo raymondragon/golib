@@ -1,4 +1,4 @@
-package tls
+package golib
 
 import (
     "crypto/rand"
