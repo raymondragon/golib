@@ -13,7 +13,7 @@ import (
     "github.com/caddyserver/certmagic"
 )
 
-func tlsConfigGeneration(hostname string) (*tls.Config, error) {
+func TLSConfigGeneration(hostname string) (*tls.Config, error) {
     private, err := rsa.GenerateKey(rand.Reader, 2048)
     if err != nil {
         return nil, err
@@ -46,7 +46,7 @@ func tlsConfigGeneration(hostname string) (*tls.Config, error) {
     return tlsConfig, nil
 }
 
-func tlsConfigApplication(hostname string) (*tls.Config, error) {
+func TLSConfigApplication(hostname string) (*tls.Config, error) {
     certmagic.DefaultACME.CA = certmagic.LetsEncryptProductionCA
     certmagic.DefaultACME.Agreed = true
     certmagic.DefaultACME.Email = "cert@" + hostname
