@@ -14,7 +14,7 @@ type ParsedURL struct {
     Fragment string
 }
 
-func urlParse(rawURL string) (ParsedURL, error) {
+func UrlParse(rawURL string) (ParsedURL, error) {
     u, err := url.Parse(rawURL)
     if err != nil {
         return ParsedURL{}, err
