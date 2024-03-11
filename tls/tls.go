@@ -38,7 +38,11 @@ func tlsConfigGeneration(hostname string) (*tls.Config, error) {
     }
     crtPEM := pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: crtDER})
     keyPEM := pem.EncodeToMemory(&pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(private)})
-    tlsConfig := &tls.Config{Certificates: []tls.Certificate{tls.X509KeyPair(crtPEM, keyPEM)}}
+    cert, err := tls.X509KeyPair(crtPEM, keyPEM)
+    if err != nil {
+        return nil, err
+    }
+    tlsConfig := &tls.Config{Certificates: []tls.Certificate{cert}}
     return tlsConfig, nil
 }
 
