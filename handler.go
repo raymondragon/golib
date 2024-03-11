@@ -18,13 +18,13 @@ func webdavHandler(dir, prefix string) http.Handler {
     }
 }
 
-func proxyHandler(hostname, username, password string) (http.Handler, error) {
+func proxyHandler(hostname, username, password string) http.Handler {
     proxy := goproxy.NewProxyHttpServer()
     auth.ProxyBasic(proxy, hostname, func(usr, pwd string) bool {
         return usr == username && pwd == password
     })
     proxy.NonproxyHandler = http.HandlerFunc(ipDisplayHandler)
-    return proxy, nil
+    return proxy
 }
 
 func ipDisplayHandler(w http.ResponseWriter, r *http.Request) {
