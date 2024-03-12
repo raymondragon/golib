@@ -9,7 +9,6 @@ import (
     "golang.org/x/net/webdav"
     "github.com/elazarl/goproxy"
     "github.com/elazarl/goproxy/ext/auth"
-    "github.com/raymondragon/golib"
 )
 
 func WebdavHandler(dir, prefix string) http.Handler {
@@ -54,7 +53,7 @@ func IPRecordHandler(fileName string) http.HandlerFunc {
             return
         }
         defer file.Close()
-        if golib.IsInFile(clientIP, fileName) {
+        if IsInFile(clientIP, fileName) {
             return
         }
         if _, err := file.WriteString(clientIP + "\n"); err != nil {
