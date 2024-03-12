@@ -38,3 +38,26 @@ func IPDisplayHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 }
+
+func IPRecordHandler(fileName string) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        clientIP, _, err := net.SplitHostPort(r.RemoteAddr)
+        if err != nil {
+            log.Printf("[WARN] %v", err)
+            return
+        }
+        file, err := os.OpenFile(fileName, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+        if err != nil {
+            log.Printf("[WARN] %v", err)
+            return
+        }
+        defer file.Close()
+        if IsInFile(clientIP, fileName) {
+            return
+        }
+        if _, err := file.WriteString(clientIP + "\n"); err != nil {
+            log.Printf("[WARN] %v", err)
+            return
+        }
+    }
+}
