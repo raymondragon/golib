@@ -4,6 +4,7 @@ import (
     "log"
     "net"
     "net/http"
+    "os"
 
     "golang.org/x/net/webdav"
     "github.com/elazarl/goproxy"
@@ -52,7 +53,7 @@ func IPRecordHandler(fileName string) http.HandlerFunc {
             return
         }
         defer file.Close()
-        if IsInFile(clientIP, fileName) {
+        if golib.IsInFile(clientIP, fileName) {
             return
         }
         if _, err := file.WriteString(clientIP + "\n"); err != nil {
