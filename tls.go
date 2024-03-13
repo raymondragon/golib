@@ -13,7 +13,7 @@ import (
     "github.com/caddyserver/certmagic"
 )
 
-func TLSConfigNil() *tls.Config {
+func TLSConfigInit() *tls.Config {
     return &tls.Config{}
 }
 
