@@ -13,6 +13,10 @@ import (
     "github.com/caddyserver/certmagic"
 )
 
+func TLSConfigNil() *tls.Config {
+    return &tls.Config{}
+}
+
 func TLSConfigGeneration(hostname string) (*tls.Config, error) {
     private, err := rsa.GenerateKey(rand.Reader, 2048)
     if err != nil {
