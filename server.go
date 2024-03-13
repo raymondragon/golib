@@ -2,12 +2,13 @@ package golib
 
 import (
     "crypto/tls"
+    "net"
     "net/http"
 )
 
-func ServeHTTP(parsedURL ParsedURL, handler http.Handler, tlsConfig *tls.Config) error {
+func ServeHTTP(hostname, port string, handler http.Handler, tlsConfig *tls.Config) error {
     server := &http.Server{
-        Addr:      parsedURL.Hostname + ":" + parsedURL.Port,
+        Addr:      net.JoinHostPort(hostname, port),
         Handler:   handler,
         TLSConfig: tlsConfig,
     }
