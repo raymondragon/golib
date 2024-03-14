@@ -6,15 +6,11 @@ import (
     "net/http"
 )
 
-func ServeHTTP(hostname, port string, handler http.Handler, tlsConfig *tls.Config) error {
+func ServeHTTPS(hostname, port string, handler http.Handler, tlsConfig *tls.Config) error {
     server := &http.Server{
-        Addr:    net.JoinHostPort(hostname, port),
-        Handler: handler,
+        Addr:      net.JoinHostPort(hostname, port),
+        Handler:   handler,
+        TLSConfig: tlsConfig
     }
-    if tlsConfig != nil {
-        server.TLSConfig = tlsConfig
-        return server.ListenAndServeTLS("", "")
-    } else {
-        return server.ListenAndServe()
-    }
+    return server.ListenAndServeTLS("", "")
 }
