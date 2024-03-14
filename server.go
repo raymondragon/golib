@@ -8,13 +8,13 @@ import (
 
 func ServeHTTP(hostname, port string, handler http.Handler, tlsConfig *tls.Config) error {
     server := &http.Server{
-        Addr:      net.JoinHostPort(hostname, port),
-        Handler:   handler,
-        TLSConfig: tlsConfig,
+        Addr:    net.JoinHostPort(hostname, port),
+        Handler: handler,
     }
-    if tlsConfig == nil {
-        return server.ListenAndServe()
-    } else {
+    if tlsConfig != nil {
+        server.TLSConfig = tlsConfig
         return server.ListenAndServeTLS("", "")
+    } else {
+        return server.ListenAndServe()
     }
 }
