@@ -10,7 +10,7 @@ func ServeHTTPS(hostname, port string, handler http.Handler, tlsConfig *tls.Conf
     server := &http.Server{
         Addr:      net.JoinHostPort(hostname, port),
         Handler:   handler,
-        TLSConfig: tlsConfig
+        TLSConfig: tlsConfig,
     }
     return server.ListenAndServeTLS("", "")
 }
