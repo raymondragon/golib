@@ -6,15 +6,15 @@ import (
     "strings"
 )
 
-func IsInFile(str, filepath string) bool {
-    file, err := os.Open(filepath)
+func IsInFile(strName, filePath string) bool {
+    file, err := os.Open(filePath)
     if err != nil {
         return false
     }
     defer file.Close()
     scanner := bufio.NewScanner(file)
     for scanner.Scan() {
-        if strings.TrimSpace(scanner.Text()) == str {
+        if strings.TrimSpace(scanner.Text()) == strName {
             return true
         }
     }
