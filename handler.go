@@ -36,6 +36,7 @@ func IPDisplayHandler(w http.ResponseWriter, r *http.Request) {
     clientIP, _, err := net.SplitHostPort(r.RemoteAddr)
     if err != nil {
         log.Printf("[WARN] %v", err)
+        http.Error(w, err.Error(), http.StatusBadRequest)
         return
     }
     if _, err := w.Write([]byte(clientIP + "\n")); err != nil {
@@ -49,6 +50,7 @@ func IPRecordHandler(fileName string) http.HandlerFunc {
         clientIP, _, err := net.SplitHostPort(r.RemoteAddr)
         if err != nil {
             log.Printf("[WARN] %v", err)
+            http.Error(w, err.Error(), http.StatusBadRequest)
             return
         }
         file, err := os.OpenFile(fileName, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
