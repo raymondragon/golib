@@ -24,9 +24,10 @@ func ProxyHandler(hostname, username, password string, custom http.Handler) http
     auth.ProxyBasic(proxy, hostname, func(usr, pwd string) bool {
         return usr == username && pwd == password
     })
-    proxy.NonproxyHandler = http.HandlerFunc(IPDisplayHandler)
     if custom != nil {
         proxy.NonproxyHandler = custom
+    } else {
+        proxy.NonproxyHandler = http.HandlerFunc(IPDisplayHandler)
     }
     return proxy
 }
