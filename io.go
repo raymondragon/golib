@@ -15,7 +15,8 @@ func HandleConn(localConn net.Conn, filePath, remoteAddr string) {
     }
     remoteConn, err := net.Dial("tcp", remoteAddr)
     if err != nil {
-        log.Fatalf("[ERRO] %v", err)
+        log.Printf("[WARN] %v", err)
+        return
     }
     defer remoteConn.Close()
     go io.Copy(remoteConn, localConn)
