@@ -6,10 +6,10 @@ import (
     "net"
 )
 
-func HandleConn(localConn net.Conn, authEnabled bool, filePath, remoteAddr string) {
+func HandleConn(localConn net.Conn, filePath, remoteAddr string) {
     defer localConn.Close()
     clientIP := localConn.RemoteAddr().(*net.TCPAddr).IP.String()
-    if authEnabled && !IsInFile(clientIP, filePath) {
+    if filePath != "" && !IsInFile(clientIP, filePath) {
         log.Printf("[WARN] %v", clientIP)
         return
     }
