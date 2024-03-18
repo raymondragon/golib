@@ -29,13 +29,17 @@ func URLParse(rawURL string) (ParsedURL, error) {
     if u.Port() != "" {
         port = u.Port()
     }
+    path := "/"
+    if u.Path != "" {
+        path = u.Path
+    }
     return ParsedURL{
         Scheme:   u.Scheme,
         Username: username,
         Password: password,
         Hostname: u.Hostname(),
         Port:     port,
-        Path:     u.Path,
+        Path:     path,
         Fragment: u.Fragment,
     }, nil
 }
