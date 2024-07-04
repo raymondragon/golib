@@ -46,10 +46,14 @@ func TLSConfigGeneration(hostname string) (*tls.Config, error) {
     return tlsConfig, nil
 }
 
-func TLSConfigApplication(hostname string) (*tls.Config, error) {
+func TLSConfigApplication(username, hostname string) (*tls.Config, error) {
     certmagic.DefaultACME.CA = certmagic.LetsEncryptProductionCA
     certmagic.DefaultACME.Agreed = true
-    certmagic.DefaultACME.Email = "reply@" + hostname
+    eMail := username + "@" + hostname
+    if username == "" {
+        eMail = "acme@" + hostname
+    }
+    certmagic.DefaultACME.Email = eMail
     tlsConfig, err := certmagic.TLS([]string{hostname})
     return tlsConfig, err
 }
