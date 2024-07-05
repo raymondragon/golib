@@ -57,3 +57,11 @@ func TLSConfigApplication(username, hostname string) (*tls.Config, error) {
     tlsConfig, err := certmagic.TLS([]string{hostname})
     return tlsConfig, err
 }
+
+func TLSConfigSetup(username, hostname string) (*tls.Config, error) {
+    tlsConfig, err := TLSConfigApplication(username, hostname)
+    if err != nil {
+        tlsConfig, err = TLSConfigGeneration(hostname)
+    }
+    return tlsConfig, err
+}
