@@ -19,10 +19,11 @@ func WebdavHandler(dir, prefix string) http.Handler {
     }
 }
 
-func ProxyHandler(hostname, username, password string, custom http.Handler) http.Handler {
+func ProxyHandler(hostname, password string, custom http.Handler) http.Handler {
     proxy := goproxy.NewProxyHttpServer()
-    auth.ProxyBasic(proxy, hostname, func(usr, pwd string) bool {
-        return usr == username && pwd == password
+    proxy.Verbose = true
+    auth.ProxyBasic(proxy, hostname, func(passwd string) bool {
+        return passwd == password
     })
     if custom != nil {
         proxy.NonproxyHandler = custom
